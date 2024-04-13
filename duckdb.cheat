@@ -1,0 +1,53 @@
+% duckdb, sql
+# Execute SQL statement and return results in default table format
+duckdb -c "<sql>"
+
+% duckdb, csv, sql
+# Execute SQL statement and return results in csv
+duckdb -csv -c "<sql>"
+$ file: find . -type f -name "*.csv"
+
+% duckdb, sql, json
+# Execute SQL statement and return results in json
+duckdb -json -c "<sql>"
+$ file: find . -type f -name "*.csv"
+
+% duckdb, sql
+# Execute SQL script
+duckdb -c ".read <file>"
+$ file: find . -type f -name "*.sql"
+
+% duckdb, csv, sql
+# Return entire contents of csv file
+duckdb -c "SELECT * FROM read_csv_auto(<file>)"
+$ file: find . -type f -name "*.csv"
+
+% duckdb, csv, sql
+# Return entire contents of json file
+duckdb -c "SELECT * FROM <file>"
+$ file: find . -type f -name "*.json"
+
+% duckdb, csv, sql
+# Return column(s) from  csv file
+duckdb -c "SELECT <col> FROM read_csv_auto(<file>)"
+$ file: find . -type f -name "*.csv"
+
+% duckdb, csv, sql
+# Return subset of csv file based on column value
+duckdb -c "SELECT * FROM read_csv_auto(<file>) WHERE <condition>"
+$ file: find . -type f -name "*.csv"
+
+% duckdb, csv, sql
+# Return sorted values from column(s)
+duckdb -c "SELECT <col> FROM read_csv_auto(<file>) ORDER BY <sort_col>"
+$ file: find . -type f -name "*.csv"
+
+% duckdb, csv, sql
+# Return average value of column
+duckdb -c "SELECT AVG(<col>) FROM read_csv_auto(<file>)"
+$ file: find . -type f -name "*.csv"
+
+% duckdb, csv, sql
+# Return average value of column, grouped by another column
+duckdb -c "SELECT AVG(<col>) FROM read_csv_auto(<file>) GROUP BY <group>"
+$ file: find . -type f -name "*.csv"

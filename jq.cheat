@@ -1,0 +1,60 @@
+% jq, json
+# Show all 1st level keys and value types
+jq 'to_entries | map({"key": .key, "value": .value | type}) | from_entries' <file>
+$ file: find . -type f -name "*.json"
+
+% jq, json
+# Show all 1st level keys and value lengths
+jq 'to_entries | map({"key": .key, "value": .value | length}) | from_entries' <file>
+$ file: find . -type f -name "*.json"
+
+% jq, json
+# Show all 1st level keys, value types, and value lengths
+jq 'to_entries | map({"key": .key, "value": .value | {"type": type, "length": length}}) | from_entries' <file>
+$ file: find . -type f -name "*.json"
+
+% jq, json
+# Show all 1st and 2nd level keys/array indices
+jq 'to_entries | map({"key": .key, "value": .value | map(keys? | sort) | unique}) | from_entries' <file>
+$ file: find . -type f -name "*.json"
+
+% jq, json
+# Return all properties where the given key contains the specified value
+jq 'map(select(.<field>[] | contains(<value>)))' <file>
+$ file: find . -type f -name "*.json"
+$ field: jq -r 'keys[]' <file>
+
+% jq, json
+# Reverse all keys and values in json object
+jq 'to_entries | map({(.value) : .key})' <file>
+$ file: find . -type f -name "*.json"
+
+% jq, json
+# Add a new property to all 1st level properties having an object as their value 
+jq '.[] | if type=="object" then . + {"<new_key>" : <new_value>} else . end' <file>
+$ file: find . -type f -name "*.json"
+
+% jq, json
+# Sort the properties of a json object by value
+jq 'to_entries | sort_by(.value) | from_entries' <file>
+$ file: find . -type f -name "*.json"
+
+% jq, json
+# Convert json object to csv format
+jq 'map(to_entries | map(.value) | @csv)[]' <file>
+$ file: find . -type f -name "*.json"
+
+% jq, json
+# Show all paths in json object
+jq 'path(..) | join(".")' <file>
+$ file: find . -type f -name "*.json"
+
+% jq, json, jsonl
+# Convert json object to jsonl format
+jq -c 'to_entries | map({(.key): .value})[]' <file>
+$ file: find . -type f -name "*.json"
+
+% jq, json, jsonl
+# Convert jsonl to json object
+jq -s '.[]' <file>
+$ file: find . -type f -name "*.json"

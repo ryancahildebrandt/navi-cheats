@@ -1,0 +1,50 @@
+% prql, sql
+# Compile PRQL command to SQL
+echo "<prql>" | prqlc compile
+
+% prql, sql
+# Compile PRQL script to SQL
+cat <file> | prqlc compile
+$ file: find . -type f -name "*.prql"
+
+% prql, sql
+# Return entire contents of table
+echo "from <table>" | prqlc compile
+
+% prql, sql
+# Return column(s) from table
+echo "from <table> | select {<col>}" | prqlc compile
+
+% prql, sql
+# Return subset of table based on column value
+echo "from <table> | filter <condition>" | prqlc compile
+
+% prql, sql
+# Return sorted values from column(s)
+echo "from <table> | select {<col>} | sort {<sort_col>}" | prqlc compile
+
+% prql, sql
+# Return average value of column
+echo "from <table> | aggregate {average <col>}" | prqlc compile
+
+% prql, sql
+# Return average value of column, grouped by another column
+echo "from <table> | group {<group>} (aggregate {average <col>})" | prqlc compile
+
+% prql, sql
+# Return column(s) from table and add new column
+echo "from <table> | select {<col>} | derive {<newcol> = <expr>}" | prqlc compile
+
+% prql, sql
+# Take samples from each group of a table
+echo "from <table> | group {<group>} (take <n>)" | prqlc compile
+
+% prql, sql, duckdb, csv
+# Compile PRQL command to SQL and pass to duckdb
+echo "<prql>" | prqlc compile | duckdb
+
+% prql, sql, duckdb, csv
+# Compile PRQL script to SQL and pass to duckdb
+cat <file> | prqlc compile | duckdb
+$ file: find . -type f -name "*.prql"
+

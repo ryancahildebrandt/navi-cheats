@@ -1,0 +1,45 @@
+% polars, csv, sql
+# Execute SQL statement on csv file and return results in default table format
+echo "<sql>" | polars
+
+% polars, csv, sql
+# Execute SQL statement on csv file and return specified format
+echo "<sql>" | polars -o <format>
+$ file: find . -type f -name "*.csv"
+$ format: echo "csv json parquet arrow markdown" | awk '{split($0, opts , " ")} END {for(o in opts){print opts[o]}}'
+
+% polars, csv, sql
+# Execute SQL script on csv file
+cat <file> | polars
+$ file: find . -type f -name "*.sql"
+
+% polars, csv, sql
+# Return entire contents of csv file
+echo "SELECT * FROM read_csv('<file>')" | polars
+$ file: find . -type f -name "*.csv"
+
+% polars, csv, sql
+# Return column(s) from  csv file
+echo "SELECT <col> FROM read_csv('<file>')" | polars
+$ file: find . -type f -name "*.csv"
+
+% polars, csv, sql
+# Return subset of csv file based on column value
+echo "SELECT * FROM read_csv('<file>') WHERE <condition>" | polars
+$ file: find . -type f -name "*.csv"
+
+% polars, csv, sql
+# Return sorted values from column(s)
+echo "SELECT <col> FROM read_csv('<file>') ORDER BY <sort_col>" | polars
+$ file: find . -type f -name "*.csv"
+
+% polars, csv, sql
+# Return average value of column
+echo "SELECT AVG(<col>) FROM read_csv('<file>')" | polars
+$ file: find . -type f -name "*.csv"
+
+% polars, csv, sql
+# Return average value of column, grouped by another column
+echo "SELECT AVG(<col>) FROM read_csv('<file>') GROUP BY <group>" | polars
+$ file: find . -type f -name "*.csv"
+

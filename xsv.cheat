@@ -1,0 +1,88 @@
+% xsv, csv
+# Print csv to table
+xsv table <file>
+$ file: find . -type f -name "*.csv"
+
+% xsv, csv
+# Sample 1 row and print column headers and values
+xsv sample 1 <file> | xsv flatten
+$ file: find . -type f -name "*.csv"
+
+% xsv, csv
+# Inspect the columns and values for ith row
+xsv slice -i <i> <file> | xsv flatten
+$ file: find . -type f -name "*.csv"
+
+% xsv, csv
+# Return the 1st 10 rows and print to table
+xsv slice -s <s> -l <l> <file> | xsv table
+$ file: find . -type f -name "*.csv"
+
+% xsv, csv
+# Change delimiter used in csv file
+xsv fmt -t <delim> <file>
+$ file: find . -type f -name "*.csv"
+
+% xsv, csv
+# Show value counts for each column
+xsv frequency <file> | xsv flatten
+$ file: find . -type f -name "*.csv"
+
+% xsv, csv
+# Show value counts for subset of columns
+xsv select <col> | xsv frequency | xsv flatten
+$ file: find . -type f -name "*.csv"
+$ col: xsv headers <file> 
+
+% xsv, csv
+# Split csv into new files based on column values and write to specified directory
+xsv partition <col> <dir> <file>
+$ file: find . -type f -name "*.csv"
+$ col: xsv headers <file> 
+
+% xsv, csv
+# Search selected column(s) for specified search pattern
+xsv search -s <col> <exp> <file>
+$ file: find . -type f -name "*.csv"
+$ col: xsv headers <file> 
+
+% xsv, csv
+# Search all columns for specified search pattern
+xsv search <exp> <file>
+$ file: find . -type f -name "*.csv"
+
+% xsv, csv
+# Split csv into new files each with n rows and write to specified directory
+xsv split -s <n> <dir> <file>
+$ file: find . -type f -name "*.csv"
+
+% xsv, csv
+# Calculate general statistics for all columns
+xsv stats <file> | xsv flatten
+$ file: find . -type f -name "*.csv"
+
+% xsv, csv
+# Calculate general statistics for selected column(s)
+xsv select <col> | xsv stats | xsv flatten
+$ file: find . -type f -name "*.csv"
+$ col: xsv headers <file> 
+
+% xsv, csv
+# Sort selected columns by column values
+xsv select <col> <file> | xsv sort -s <sort>
+$ file: find . -type f -name "*.csv"
+$ col: xsv headers <file> 
+$ sort: xsv headers <file> 
+
+% xsv, csv
+# Sort csv by column values
+xsv sort -s <sort> <file>
+$ file: find . -type f -name "*.csv"
+$ sort: xsv headers <file> 
+
+% xsv, csv
+# Sort selected columns by column values and return the first n entries
+xsv select <col> <file> | xsv sort -s <sort> | slice -s 0 -l <n>
+$ file: find . -type f -name "*.csv"
+$ col: xsv headers <file> 
+$ sort: xsv headers <file> 
